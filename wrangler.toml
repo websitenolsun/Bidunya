@@ -1,4 +1,4 @@
-name = "odul-katalog-site"
+name = "bidunya"
 main = ".open-next/worker.js"
 compatibility_date = "2026-07-12"
 compatibility_flags = ["nodejs_compat"]
