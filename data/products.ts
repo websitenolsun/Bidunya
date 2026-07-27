@@ -1,0 +1,113 @@
+import type { CategorySlug } from "@/data/categories";
+
+export type Product = {
+  id: string;
+  code: string;
+  title: string;
+  category: CategorySlug;
+  parentCategory: string;
+  image: string;
+  imageAlt: string;
+  specs: {
+    height: string | null;
+    color: string | null;
+    material: string | null;
+    size: string | null;
+  };
+  shortDescription: string;
+  whatsappText: string;
+  featured?: boolean;
+  bestSeller?: boolean;
+};
+
+type CatalogDefinition = {
+  slug: CategorySlug;
+  title: string;
+  codePrefix: string;
+  imageCount: number;
+  parentCategory?: string;
+  imageExtension?: "jpg" | "webp";
+};
+
+// Yeni görseller eklendiğinde ilgili klasöre sıralı .webp dosyalarını koyup
+// yalnızca imageCount değerini güncellemek yeterlidir.
+export const catalogDefinitions: CatalogDefinition[] = [
+  { slug: "madalyalar", title: "Madalya", codePrefix: "MAD", imageCount: 10 },
+  { slug: "kupalar", title: "Kupa", codePrefix: "KUP", imageCount: 22 },
+  { slug: "plaketler/album", title: "Albüm Plaket", codePrefix: "ALB", imageCount: 4, parentCategory: "plaketler" },
+  { slug: "plaketler/ahsap", title: "Ahşap Plaket", codePrefix: "AHS", imageCount: 7, parentCategory: "plaketler" },
+  { slug: "plaketler/cam", title: "Cam Plaket", codePrefix: "CAM", imageCount: 9, parentCategory: "plaketler" },
+  { slug: "tabaklar/cini", title: "Çini Tabak", codePrefix: "CIN", imageCount: 12, parentCategory: "tabaklar" },
+  { slug: "tabaklar/islemeli", title: "İşlemeli Tabak", codePrefix: "ISL", imageCount: 14, parentCategory: "tabaklar" },
+  { slug: "masa-isimlik", title: "Masa İsimlik", codePrefix: "MSI", imageCount: 4 },
+  { slug: "rozetler", title: "Yaka Rozeti", codePrefix: "ROZ", imageCount: 8 },
+  { slug: "bayraklar", title: "Türk Bayraklı Masa İsimliği", codePrefix: "BYR", imageCount: 5, imageExtension: "jpg" },
+];
+
+export const products: Product[] = catalogDefinitions.flatMap((catalog) =>
+  Array.from({ length: catalog.imageCount }, (_, index) => {
+    const number = index + 1;
+    const code = `${catalog.codePrefix}-${String(number).padStart(3, "0")}`;
+
+    return {
+      id: `${catalog.slug.replaceAll("/", "-")}-${number}`,
+      code,
+      title: `${catalog.title} Modeli ${number}`,
+      category: catalog.slug,
+      parentCategory: catalog.parentCategory ?? catalog.slug,
+      image: `/images/catalog/${catalog.slug}/${number}.${catalog.imageExtension ?? "webp"}`,
+      imageAlt: `${code} kodlu ${catalog.title.toLocaleLowerCase("tr-TR")} modeli`,
+      specs: {
+        height: null,
+        color: null,
+        material: null,
+        size: null,
+      },
+      shortDescription: `${catalog.title} koleksiyonunda yer alan ${code} kodlu ürün modeli.`,
+      whatsappText: `Merhaba, ${code} ürün kodlu ${catalog.title.toLocaleLowerCase("tr-TR")} hakkında bilgi ve fiyat almak istiyorum.`,
+      featured: number <= 2,
+      bestSeller: catalog.slug === "kupalar" && number === 1,
+    };
+  }),
+);
+
+export function getProductsByCategory(slug: string) {
+  const normalizedSlug = slug.replace(/^\/|\/$/g, "");
+
+  return products.filter(
+    (product) =>
+      product.category === normalizedSlug ||
+      product.category.startsWith(`${normalizedSlug}/`),
+  );
+}
+
+export function getFeaturedProducts(limit = 8) {
+  return products.filter((product) => product.featured).slice(0, limit);
+}
+
+export function getBestSellerProduct() {
+  return products.find((product) => product.bestSeller) ?? products[0];
+}
+
+export function searchProducts(query: string) {
+  const normalized = query.trim().toLocaleLowerCase("tr-TR");
+
+  if (!normalized) {
+    return [];
+  }
+
+  return products.filter((product) => {
+    const haystack = [
+      product.code,
+      product.title,
+      product.category,
+      product.parentCategory,
+      product.shortDescription,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLocaleLowerCase("tr-TR");
+
+    return haystack.includes(normalized);
+  });
+}
