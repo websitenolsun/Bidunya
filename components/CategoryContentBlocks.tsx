@@ -7,6 +7,7 @@ const parentUseCases: Record<string, string[]> = {
   madalyalar: ["Spor turnuvaları", "Okul yarışmaları", "Kurumsal etkinlikler", "Koşu ve maratonlar"],
   oduller: ["Şirket ödül törenleri", "Bayi toplantıları", "Spor organizasyonları", "Mezuniyet programları"],
   plaketler: ["Teşekkür sunumları", "Hizmet yılı törenleri", "Protokol hediyeleri", "Kurumsal takdir programları"],
+  isimlik: ["Personel kimliklendirme", "Ofis ve resepsiyonlar", "Etkinlikler", "Kurumsal organizasyonlar"],
   bayraklar: ["Makam odaları", "Yönetici masaları", "Resmî kurumlar", "Kurumsal ofisler"],
   "diger-urunler": ["Personel kimliklendirme", "Promosyon çalışmaları", "Teknik etiketleme", "Yönlendirme uygulamaları"],
 };

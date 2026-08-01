@@ -39,15 +39,25 @@ export const catalogDefinitions: CatalogDefinition[] = [
   { slug: "plaketler/cam", title: "Cam Plaket", codePrefix: "CAM", imageCount: 9, parentCategory: "plaketler" },
   { slug: "tabaklar/cini", title: "Çini Tabak", codePrefix: "CIN", imageCount: 12, parentCategory: "tabaklar" },
   { slug: "tabaklar/islemeli", title: "İşlemeli Tabak", codePrefix: "ISL", imageCount: 14, parentCategory: "tabaklar" },
-  { slug: "masa-isimlik", title: "Masa İsimlik", codePrefix: "MSI", imageCount: 4 },
+  { slug: "masa-isimlik", title: "Masa İsimlik", codePrefix: "MSI", imageCount: 4, parentCategory: "isimlik" },
+  { slug: "yaka-isimlik", title: "Yaka İsimlik", codePrefix: "YIS", imageCount: 2, parentCategory: "isimlik" },
   { slug: "rozetler", title: "Yaka Rozeti", codePrefix: "ROZ", imageCount: 8 },
   { slug: "bayraklar", title: "Türk Bayraklı Masa İsimliği", codePrefix: "BYR", imageCount: 5, imageExtension: "jpg" },
 ];
+
+const productImageOverrides: Record<string, string> = {
+  "KUP-007": "/images/catalog/kupalar/7-revize.webp",
+  "KUP-009": "/images/catalog/kupalar/9-revize.webp",
+  "ALB-002": "/images/catalog/plaketler/album/2-revize.webp",
+};
 
 export const products: Product[] = catalogDefinitions.flatMap((catalog) =>
   Array.from({ length: catalog.imageCount }, (_, index) => {
     const number = index + 1;
     const code = `${catalog.codePrefix}-${String(number).padStart(3, "0")}`;
+    const image =
+      productImageOverrides[code] ??
+      `/images/catalog/${catalog.slug}/${number}.${catalog.imageExtension ?? "webp"}`;
 
     return {
       id: `${catalog.slug.replaceAll("/", "-")}-${number}`,
@@ -55,7 +65,7 @@ export const products: Product[] = catalogDefinitions.flatMap((catalog) =>
       title: `${catalog.title} Modeli ${number}`,
       category: catalog.slug,
       parentCategory: catalog.parentCategory ?? catalog.slug,
-      image: `/images/catalog/${catalog.slug}/${number}.${catalog.imageExtension ?? "webp"}`,
+      image,
       imageAlt: `${code} kodlu ${catalog.title.toLocaleLowerCase("tr-TR")} modeli`,
       specs: {
         height: null,
@@ -77,12 +87,17 @@ export function getProductsByCategory(slug: string) {
   return products.filter(
     (product) =>
       product.category === normalizedSlug ||
-      product.category.startsWith(`${normalizedSlug}/`),
+      product.category.startsWith(`${normalizedSlug}/`) ||
+      product.parentCategory === normalizedSlug,
   );
 }
 
 export function getFeaturedProducts(limit = 8) {
   return products.filter((product) => product.featured).slice(0, limit);
+}
+
+export function getProductByCode(code: string) {
+  return products.find((product) => product.code === code);
 }
 
 export function getBestSellerProduct() {

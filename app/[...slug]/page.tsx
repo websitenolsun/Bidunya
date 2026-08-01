@@ -58,7 +58,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   const products = getProductsByCategory(category.slug);
   const parentCategory =
-    slug.length > 1 ? getCategoryBySlug(slug.slice(0, -1).join("/")) : null;
+    category.parent !== category.slug ? getCategoryBySlug(category.parent) : null;
   const breadcrumbItems = [
     ...(parentCategory
       ? [{ label: tr(parentCategory.title), href: `/${parentCategory.slug}` }]

@@ -46,7 +46,7 @@ export function Header() {
       <header className="sticky top-0 z-40 border-b border-white/60 bg-white/90 shadow-sm backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <Link href="/" className="group flex shrink-0 items-center gap-3 text-ink">
-            <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-[linear-gradient(135deg,#12183f,#2d2f7f)] shadow-soft ring-1 ring-white/60">
+            <div className="flex h-11 w-11 items-center justify-center bg-white">
               <Image
                 src={siteConfig.logoSrc}
                 alt={siteConfig.logoAlt}

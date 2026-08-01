@@ -8,7 +8,9 @@ export type CategorySlug =
   | "tabaklar"
   | "tabaklar/cini"
   | "tabaklar/islemeli"
+  | "isimlik"
   | "masa-isimlik"
+  | "yaka-isimlik"
   | "rozetler"
   | "bayraklar";
 
@@ -132,12 +134,27 @@ export const categories: Category[] = [
     "/images/catalog/tabaklar/islemeli/1.webp",
   ),
   makeCategory(
-    "masa-isimlik",
-    "Masa İsimlik",
-    "masa-isimlik",
-    "Ofis, resepsiyon ve toplantı alanları için masa üstü isimlik modelleri.",
+    "isimlik",
+    "İsimlik",
+    "isimlik",
+    "Masa ve yaka isimlik modellerinin tamamını bir arada inceleyin.",
     "/images/catalog/masa-isimlik/1.webp",
     true,
+    true,
+  ),
+  makeCategory(
+    "masa-isimlik",
+    "Masa İsimlik",
+    "isimlik",
+    "Ofis, resepsiyon ve toplantı alanları için masa üstü isimlik modelleri.",
+    "/images/catalog/masa-isimlik/1.webp",
+  ),
+  makeCategory(
+    "yaka-isimlik",
+    "Yaka İsimlik",
+    "isimlik",
+    "Personel, etkinlik ve kurumsal organizasyonlar için yaka isimlik modelleri.",
+    "/images/catalog/yaka-isimlik/1.webp",
   ),
   makeCategory(
     "rozetler",
@@ -177,7 +194,14 @@ export const navigationItems: NavigationItem[] = [
       { slug: "tabaklar/islemeli", title: "İşlemeli Tabaklar" },
     ],
   },
-  { slug: "masa-isimlik", title: "Masa İsimlik" },
+  {
+    slug: "isimlik",
+    title: "İsimlik",
+    children: [
+      { slug: "masa-isimlik", title: "Masa İsimlik" },
+      { slug: "yaka-isimlik", title: "Yaka İsimlik" },
+    ],
+  },
   { slug: "rozetler", title: "Rozetler" },
   { slug: "bayraklar", title: "Bayraklar" },
 ];

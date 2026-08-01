@@ -7,7 +7,7 @@ import { FeatureBox } from "@/components/FeatureBox";
 import { HeroSlider } from "@/components/HeroSlider";
 import { ProductGrid } from "@/components/ProductGrid";
 import { getCategoryBySlug } from "@/data/categories";
-import { getBestSellerProduct, getFeaturedProducts } from "@/data/products";
+import { getBestSellerProduct, getFeaturedProducts, getProductByCode } from "@/data/products";
 import { whatsappHref } from "@/data/site";
 import { tr } from "@/lib/turkish";
 
@@ -45,7 +45,7 @@ const popularCategorySlugs = [
   "kupalar",
   "plaketler",
   "tabaklar",
-  "masa-isimlik",
+  "isimlik",
   "rozetler",
 ];
 
@@ -64,7 +64,32 @@ export default function HomePage() {
     .map((slug) => getCategoryBySlug(slug))
     .filter((category) => Boolean(category));
   const featuredProducts = getFeaturedProducts(12);
-  const bestSeller = getBestSellerProduct();
+  const cupModelSeven = getProductByCode("KUP-007");
+  const cupModelNine = getProductByCode("KUP-009");
+  const flagModelFive = getProductByCode("BYR-005");
+  const badgeModelThree = getProductByCode("ROZ-003");
+  const nameBadgeModelOne = getProductByCode("YIS-001");
+
+  if (cupModelSeven) {
+    featuredProducts[0] = cupModelSeven;
+  }
+
+  if (flagModelFive) {
+    featuredProducts[3] = flagModelFive;
+  }
+
+  if (badgeModelThree) {
+    featuredProducts[6] = badgeModelThree;
+  }
+
+  if (nameBadgeModelOne) {
+    featuredProducts[9] = nameBadgeModelOne;
+  }
+
+  if (cupModelNine) {
+    featuredProducts[10] = cupModelNine;
+  }
+  const bestSeller = getProductByCode("ISL-002") ?? getBestSellerProduct();
 
   return (
     <>
