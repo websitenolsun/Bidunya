@@ -49,6 +49,7 @@ const productImageOverrides: Record<string, string> = {
   "KUP-007": "/images/catalog/kupalar/7-revize.webp",
   "KUP-009": "/images/catalog/kupalar/9-revize.webp",
   "ALB-002": "/images/catalog/plaketler/album/2-revize.webp",
+  "CAM-002": "/images/catalog/plaketler/cam/2-revize.webp",
 };
 
 export const products: Product[] = catalogDefinitions.flatMap((catalog) =>
