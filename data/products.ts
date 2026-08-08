@@ -26,7 +26,7 @@ type CatalogDefinition = {
   codePrefix: string;
   imageCount: number;
   parentCategory?: string;
-  imageExtension?: "jpg" | "webp";
+  imageExtension?: "jpg" | "jpeg" | "webp";
 };
 
 // Yeni görseller eklendiğinde ilgili klasöre sıralı .webp dosyalarını koyup
@@ -39,7 +39,7 @@ export const catalogDefinitions: CatalogDefinition[] = [
   { slug: "plaketler/cam", title: "Cam Plaket", codePrefix: "CAM", imageCount: 9, parentCategory: "plaketler" },
   { slug: "tabaklar/cini", title: "Çini Tabak", codePrefix: "CIN", imageCount: 12, parentCategory: "tabaklar" },
   { slug: "tabaklar/islemeli", title: "İşlemeli Tabak", codePrefix: "ISL", imageCount: 14, parentCategory: "tabaklar" },
-  { slug: "masa-isimlik", title: "Masa İsimlik", codePrefix: "MSI", imageCount: 4, parentCategory: "isimlik" },
+  { slug: "masa-isimlik", title: "Masa İsimlik", codePrefix: "MSI", imageCount: 7, parentCategory: "isimlik" },
   { slug: "yaka-isimlik", title: "Yaka İsimlik", codePrefix: "YIS", imageCount: 2, parentCategory: "isimlik" },
   { slug: "rozetler", title: "Yaka Rozeti", codePrefix: "ROZ", imageCount: 8 },
   { slug: "bayraklar", title: "Türk Bayraklı Masa İsimliği", codePrefix: "BYR", imageCount: 5, imageExtension: "jpg" },
@@ -49,7 +49,9 @@ const productImageOverrides: Record<string, string> = {
   "KUP-007": "/images/catalog/kupalar/7-revize.webp",
   "KUP-009": "/images/catalog/kupalar/9-revize.webp",
   "ALB-002": "/images/catalog/plaketler/album/2-revize.webp",
-  "CAM-002": "/images/catalog/plaketler/cam/2-revize.webp",
+  "MSI-005": "/images/catalog/masa-isimlik/5.jpeg",
+  "MSI-006": "/images/catalog/masa-isimlik/6.jpeg",
+  "MSI-007": "/images/catalog/masa-isimlik/7.jpeg",
 };
 
 export const products: Product[] = catalogDefinitions.flatMap((catalog) =>
